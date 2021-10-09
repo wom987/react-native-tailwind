@@ -1,21 +1,75 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet } from "react-native";
 
-export default function App() {
+// Navigation
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+// Components
+import Login from './screens/Login';
+import Home from './screens/Home';
+import Carnes from "./screens/Carnes";
+import Bebidas from "./screens/Bebida";
+import Mariscos from "./screens/Mariscos";
+import Ensalada from "./screens/Ensalada";
+import AddProduct from "./screens/AddProduct";
+
+const Stack = createStackNavigator();
+
+function MyStack() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator initialRouteName="Login"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#ffc14d",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Agregar"
+        component={AddProduct}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Carnes"
+        component={Carnes}
+      />
+      <Stack.Screen
+        name="Mariscos"
+        component={Mariscos}
+      />
+      <Stack.Screen
+        name="Bebidas"
+        component={Bebidas}
+      />
+      <Stack.Screen
+        name="Ensaladas"
+        component={Ensalada}
+      />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
+}
