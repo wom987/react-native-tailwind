@@ -15,7 +15,7 @@ const Componente = (props) => {
             ? require("../assets/ensala.jpg")
             : require("../assets/fish.jpg")
         }
-        style={{ width: 100, height: 100, margin: 5 }}
+        style={{ width: 100, height: 100, margin: 1 }}
       ></Image>
       <Text style={Styles.textItemScren}>
         <Text style={Styles.textTitleItemScren}>{props.title}</Text>
