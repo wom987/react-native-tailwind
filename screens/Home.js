@@ -11,15 +11,18 @@ import {
 import tw from "tailwind-react-native-classnames";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const Home = ({ navigation }) => {
+//Base URL
+const BASE_URI="http://192.168.1.8/api/";
+
+const Home = ({ navigation,route }) => {
+ 
   const [data, setData] = useState([]);
   const [platillos, setPlatillos] = useState([]);
-
   const getCategories = async () => {
     try {
       const data = [];
 
-      fetch("http://localhost/api/cat")
+      fetch(BASE_URI+"cat")
         .then(res => res.json())
         .then(
           (result) => {
@@ -31,7 +34,6 @@ const Home = ({ navigation }) => {
                 image: newNameCategory,
               })
             })
-
             setData(data);
           }
         )
@@ -43,8 +45,9 @@ const Home = ({ navigation }) => {
 
   const getPlatillos = async () => {
     try {
+      setPlatillos([]);
       const foodData = [];
-      fetch("http://localhost/api/")
+      fetch(BASE_URI)
         .then(res => res.json())
         .then(
           (result) => {
@@ -56,7 +59,6 @@ const Home = ({ navigation }) => {
                 category: food.categoriaId
               })
             })
-
             setPlatillos(foodData);
           }
         )
@@ -72,7 +74,7 @@ const Home = ({ navigation }) => {
     getPlatillos();
 
   }, []);
-
+  
   return (
     <View style={tw`relative h-full py-10 bg-yellow-200`}>
       <Image style={tw`w-full  h-40`} source={require("../src/banner.png")} />
@@ -160,7 +162,9 @@ const Home = ({ navigation }) => {
         <Pressable
           style={tw` text-sm w-1/2  mx-auto px-4 py-2 font-medium tracking-wide text-white capitalize bg-indigo-600 rounded-md bg-green-500 `}
           onPress={() => {
-            navigation.navigate("Agregar");
+            navigation.navigate("Agregar",{
+              base_uri: BASE_URI
+            });
           }}
         >
           <Text style={[tw`flex text-center justify-between  `]}>

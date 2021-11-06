@@ -1,16 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, Text, TextInput, View } from "react-native";
+import { Image, Pressable, Text, TextInput, View ,Alert} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import tw from "tailwind-react-native-classnames";
-import firebase from "../DB/firebase";
 import { Picker } from "@react-native-picker/picker";
-const AddProduct = ({navigation}) => {
+const AddProduct = ({navigation,route}) => {
+  const { base_uri} = route.params;
   const initalState = {
     title: "",
     price: "",
     description: "",
-    category: "Carnes",
+    category: 4,
   };
   const [state, setState] = useState(initalState);
   const handleChangeText = (value, name) => {
@@ -21,16 +21,31 @@ const AddProduct = ({navigation}) => {
       alert("No se aceptan valores vacios!");
     } else {
       try {
-        firebase.db.collection("platillos").add({
-          title: state.title,
-          price: state.price,
-          description: state.description,
-          category: state.category,
-        });
+        var formData = new FormData();
+        formData.append("title",state.title);
+        formData.append("price",state.price);
+        formData.append("description",state.description);
+        formData.append("category",state.category);
+        fetch(base_uri+"add", { method: 'POST', body: formData })
+            .then(function (response) {
+              return response.text();
+            })
+              .then(function (body) {
+                Alert.alert(
+                  "La petecion ha tenido un resultado de:",
+                  body,
+                  [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                  ]
+                );
+              });
+              
         handleChangeText("", "title");
         handleChangeText("", "description");
         handleChangeText("", "price");
-        navigation.navigate("Home");
+        navigation.navigate("Home",{
+          refreshData:true
+        });
       } catch (error) {
         console.log(error);
       }
@@ -88,10 +103,10 @@ const AddProduct = ({navigation}) => {
                   handleChangeText(itemValue, "category");
                 }}
               >
-                <Picker.Item label="Bebidas" value="Bebidas" />
-                <Picker.Item label="Carnes" value="Carnes" />
-                <Picker.Item label="Ensaladas" value="Ensaladas" />
-                <Picker.Item label="Mariscos" value="Mariscos" />
+                <Picker.Item label="Bebidas" value="4" />
+                <Picker.Item label="Carnes" value="1" />
+                <Picker.Item label="Ensaladas" value="3" />
+                <Picker.Item label="Mariscos" value="2" />
               </Picker>
             </View>
             <View style={tw`mt-5`}>
