@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, Button } from "react-native";
 import Styles from "./Util";
 
 const Componente = (props) => {
@@ -10,10 +10,10 @@ const Componente = (props) => {
           props.source == "Carnes"
             ? require("../assets/meet1.jpg")
             : props.source == "Bebidas"
-            ? require("../assets/drink.jpg")
-            : props.source == "Ensaladas"
-            ? require("../assets/ensala.jpg")
-            : require("../assets/fish.jpg")
+              ? require("../assets/drink.jpg")
+              : props.source == "Ensaladas"
+                ? require("../assets/ensala.jpg")
+                : require("../assets/fish.jpg")
         }
         style={{ width: 100, height: 100, margin: 1 }}
       ></Image>

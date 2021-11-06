@@ -22,7 +22,7 @@ const Mariscos = ({ navigation, route }) => {
         keyExtractor={(item, index) => index.toString()}
         data={dataShow}
         renderItem={({ item }) => {
-          if (item.category == category) {
+          if (item.category == 2) {
             return (
               <View>
                 <Componente

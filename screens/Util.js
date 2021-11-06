@@ -8,7 +8,7 @@ const Styles = StyleSheet.create({
   banner: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 0,
     marginLeft: "1%",
     marginRight: "1%",
     width: "98%",

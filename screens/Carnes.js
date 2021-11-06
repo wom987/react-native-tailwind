@@ -21,7 +21,7 @@ const Carnes = ({ navigation, route }) => {
         keyExtractor={(item, index) => index.toString()}
         data={dataShow}
         renderItem={({ item }) => {
-          if (item.category == category) {
+          if (item.category == 1) {
             return (
               <View>
                 <Componente
@@ -29,6 +29,9 @@ const Carnes = ({ navigation, route }) => {
                   description={item.description}
                   price={item.price}
                   source={item.category}
+                  otro={()=>{
+                    navigation.navigate('Home')
+                  }}
                 />
               </View>
             );

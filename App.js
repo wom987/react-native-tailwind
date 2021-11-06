@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName="Login"
+    <Stack.Navigator initialRouteName="Home"
       screenOptions={{
         headerStyle: {
           backgroundColor: "#ffc14d",
@@ -49,18 +49,66 @@ function MyStack() {
       <Stack.Screen
         name="Carnes"
         component={Carnes}
+        options={{
+            headerStyle: {
+              backgroundColor: "#ffa500",
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "#ffa500",
+            },
+          }}
       />
       <Stack.Screen
         name="Mariscos"
         component={Mariscos}
+        options={{
+            headerStyle: {
+              backgroundColor: "#ffa500",
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "#ffa500",
+            },
+          }}
       />
       <Stack.Screen
         name="Bebidas"
         component={Bebidas}
+        options={{
+            headerStyle: {
+              backgroundColor: "#ffa500",
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "#ffa500",
+            },
+          }}
       />
       <Stack.Screen
         name="Ensaladas"
         component={Ensalada}
+        options={{
+            headerStyle: {
+              backgroundColor: "#ffa500",
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "#ffa500",
+            },
+          }}
       />
     </Stack.Navigator>
   );

@@ -11,37 +11,66 @@ import {
 import tw from "tailwind-react-native-classnames";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import firebase from "../DB/firebase";
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [platillos, setPlatillos] = useState([]);
-  useEffect(() => {
-    firebase.db.collection("categorias").onSnapshot((querySnapshot) => {
+
+  const getCategories = async () => {
+    try {
       const data = [];
-      querySnapshot.docs.forEach((doc) => {
-        const { name, image } = doc.data();
-        data.push({
-          id: doc.id,
-          name,
-          image,
-        });
-      });
-      setData(data);
-    });
-    firebase.db.collection("platillos").onSnapshot((querySnapshot) => {
-      const platillo = [];
-      querySnapshot.docs.forEach((doc) => {
-        const { title, price, description, category } = doc.data();
-        platillo.push({
-          id: doc.id,
-          title,
-          price,
-          description,
-          category,
-        });
-      });
-      setPlatillos(platillo);
-    });
+
+      fetch("http://localhost/api/cat")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            result.forEach((category) => {
+              let nameCategory = (category.categoria).toLowerCase();
+              let newNameCategory = nameCategory.charAt(0).toUpperCase() + nameCategory.slice(1)
+              data.push({
+                name: newNameCategory,
+                image: newNameCategory,
+              })
+            })
+
+            setData(data);
+          }
+        )
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getPlatillos = async () => {
+    try {
+      const foodData = [];
+      fetch("http://localhost/api/")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            result.forEach((food) => {
+              foodData.push({
+                title: food.nombre,
+                description: food.descripcion,
+                price: food.precio,
+                category: food.categoriaId
+              })
+            })
+
+            setPlatillos(foodData);
+          }
+        )
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+
+    getCategories();
+
+    getPlatillos();
+
   }, []);
 
   return (
@@ -90,10 +119,10 @@ const Home = ({ navigation }) => {
                   item.name == "Carnes"
                     ? require("../src/carne.jpg")
                     : item.name == "Bebidas"
-                    ? require("../src/bebida.jpg")
-                    : item.name == "Ensaladas"
-                    ? require("../src/ensalada.jpg")
-                    : require("../src/mariscos.jpg")
+                      ? require("../src/bebida.jpg")
+                      : item.name == "Ensaladas"
+                        ? require("../src/ensalada.jpg")
+                        : require("../src/mariscos.jpg")
                 }
               />
               <View
@@ -125,16 +154,16 @@ const Home = ({ navigation }) => {
             </Pressable>
           )}
         />
-        
+
       </View>
-      <View style={{marginTop:-50}}>
+      <View style={{ marginTop: 25 }}>
         <Pressable
           style={tw` text-sm w-1/2  mx-auto px-4 py-2 font-medium tracking-wide text-white capitalize bg-indigo-600 rounded-md bg-green-500 `}
           onPress={() => {
             navigation.navigate("Agregar");
           }}
         >
-          <Text style={tw`flex text-center justify-between  `}>
+          <Text style={[tw`flex text-center justify-between  `]}>
             <Text
               style={tw`text-lg font-semibold text-gray-700 capitalize text-white `}
             >
@@ -153,7 +182,7 @@ const Home = ({ navigation }) => {
         </Text>
       </View>
     </View>
-    
+
   );
 };
 const styles = StyleSheet.create({
